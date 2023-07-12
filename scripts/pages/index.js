@@ -6,7 +6,6 @@
       }
     })
     .then(function (value) {
-      console.table(value);
       displayData(value.photographers)
     })
     .catch(function (err) {

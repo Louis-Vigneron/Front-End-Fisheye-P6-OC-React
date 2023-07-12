@@ -36,7 +36,7 @@ function displayPhotographer(value) {
             if (el.image) {
                 pictures.push(el);
             } else {
-                videos.push(el)
+                videos.push(el);
             }
         }
     });
@@ -44,10 +44,6 @@ function displayPhotographer(value) {
     const headerPhotographe = document.querySelector('#main');
     const portrait = photographer.portrait;
     const picture = `assets/photographers/${portrait}`;
-    let totalLikes = 0;
-    pictures.forEach(el => {
-        totalLikes += el.likes;
-    });
 
     headerPhotographe.innerHTML =
         `
@@ -72,14 +68,16 @@ function displayPhotographer(value) {
     
     </div>
     <div class="total-likes">
-        <p>${totalLikes} <i class="fa-solid fa-heart"></i></p>
+   
+        <p><span class="likes-total-number">${totalLikes(pictures)}</span><i class="fa-solid fa-heart"></i> </p>
         <p>${photographer.price}€ / jour</p>
     </div>     
     
         `;
-    addLike()
-    sort(pictures, videos, firstName)
-    addPicture(pictures, videos, firstName)
+
+    sort(pictures, videos, firstName);
+    addPicture(pictures, videos, firstName);
+    addLike(pictures);
 }
 
 function addPicture(pictures, videos, firstName) {
@@ -102,16 +100,20 @@ function addPicture(pictures, videos, firstName) {
             `;
     }).join('')}
     `
+
 }
 
-function addLike() {
+function addLike(pictures) {
     let likeBtn = document.querySelectorAll(".fa-heart");
     let likeNumber = document.querySelectorAll("span");
+    let likeTotalUpdate = document.querySelector(".likes-total-number")
 
     for (let y = 0; y < likeBtn.length; y++) {
-        likeBtn[y].addEventListener("click", (e) => {
-            let a = parseInt(likeNumber[y].textContent) + 1;
-            console.log(a)
+        likeBtn[y].addEventListener("click", () => {          
+            let a = pictures[y].likes + 1;          
+            pictures[y].likes = a
+            likeNumber[y].innerHTML = `<span> ${a}<i class="fa-solid fa-heart"></i></span></figcaption>`;            
+            likeTotalUpdate.textContent = totalLikes(pictures)
         })
 
     };
@@ -168,3 +170,10 @@ function byDate(a, b) {
     }
 }
 
+function totalLikes(pictures) {
+    let totalLikes = 0;
+    pictures.forEach(el => {
+        totalLikes += el.likes;
+    });
+    return totalLikes
+}
