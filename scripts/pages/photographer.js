@@ -28,23 +28,17 @@ function displayPhotographer(value) {
         }
     });
 
-    let firstName = photographer.name.split(' ')[0];
+    let firstName = photographer.name.split(' ')[0];   
     let pictures = [];
-    let videos = [];
     value.media.forEach(el => {
         if (Id == el.photographerId) {
-            if (el.image) {
-                pictures.push(el);
-            } else {
-                videos.push(el);
-            }
+            pictures.push(el)         
         }
     });
     pictures.sort(byLikes);
     const headerPhotographe = document.querySelector('#main');
     const portrait = photographer.portrait;
     const picture = `assets/photographers/${portrait}`;
-
     headerPhotographe.innerHTML =
         `
     
@@ -74,33 +68,32 @@ function displayPhotographer(value) {
     </div>     
     
         `;
-
-    sort(pictures, videos, firstName);
-    addPicture(pictures, videos, firstName);
+    sort(pictures, firstName);
+    addPicture(firstName, pictures);
     addLike(pictures);
 }
 
-function addPicture(pictures, videos, firstName) {
+function addPicture(firstName, pictures) {
     let images = document.querySelector('.images-photographer');
-    images.innerHTML = `
-    ${pictures.map(el => {
-        return `<figure>
-                <img class="img-photographer" src="assets/${firstName}/${el.image}" alt=${el.title}>
-                <figcaption class="img-legend">${el.title}<span> ${el.likes}<i class="fa-solid fa-heart"></i></span></figcaption>
-            </figure>`;
-    }).join('')}
-    ${videos.map(el => {
-        return `
-               <figure>
-                    <video class="video-photographer" controls width="350" height="300">
-                        <source src="assets/${firstName}/${el.video}" type="video/mp4">                            
-                    </video>
-                    <figcaption class="img-legend">${el.title}<span> ${el.likes}<i class="fa-solid fa-heart"></i></span></figcaption>
-                </figure>
-            `;
-    }).join('')}
-    `
-
+    images.innerHTML = "";
+    pictures.forEach(element => {        
+    if (element.image){
+        images.innerHTML +=  `<figure>
+        <img class="img-photographer" src="assets/${firstName}/${element.image}" alt=${element.title}>
+        <figcaption class="img-legend">${element.title}<span> ${element.likes}<i class="fa-solid fa-heart"></i></span></figcaption>
+    </figure>`;
+    }
+    else {
+        images.innerHTML +=  `
+        <figure>
+             <video class="video-photographer" controls width="350" height="300">
+                 <source src="assets/${firstName}/${element.video}" type="video/mp4">                            
+             </video>
+             <figcaption class="img-legend">${element.title}<span> ${element.likes}<i class="fa-solid fa-heart"></i></span></figcaption>
+         </figure>
+     `;
+    }
+   });
 }
 
 function addLike(pictures) {
@@ -110,7 +103,7 @@ function addLike(pictures) {
 
     for (let y = 0; y < likeBtn.length; y++) {
         likeBtn[y].addEventListener("click", () => {          
-            let a = pictures[y].likes + 1;          
+            let a = pictures[y].likes + 1;         
             pictures[y].likes = a
             likeNumber[y].innerHTML = `<span> ${a}<i class="fa-solid fa-heart"></i></span></figcaption>`;            
             likeTotalUpdate.textContent = totalLikes(pictures)
@@ -119,20 +112,20 @@ function addLike(pictures) {
     };
 }
 
-function sort(array, videos, firstName) {
+function sort(pictures, firstName) {
     let optionPick = document.querySelector("#sort-select");
-    optionPick.addEventListener("change", (e) => {
+    optionPick.addEventListener("change", () => {
         if (optionPick.value == "Popularité") {
-            array.sort(byLikes);
-            addPicture(array, videos, firstName);
+            pictures.sort(byLikes);
+            addPicture(firstName, pictures);
         }
         if (optionPick.value == "Date") {
-            array.sort(byDate);
-            addPicture(array, videos, firstName);
+            pictures.sort(byDate);
+            addPicture(firstName, pictures);
         }
         if (optionPick.value == "Titre") {
-            array.sort(byName);
-            addPicture(array, videos, firstName);
+            pictures.sort(byName);
+            addPicture(firstName, pictures);
         }
     })
 
