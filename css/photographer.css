@@ -54,14 +54,20 @@
     width: 50%;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
-    padding: 35px;
+    padding: 25px;
     margin: auto;
+    position: absolute;
+    top: 15px;
+    right: 0;
+    left: 0;
+    bottom: 15px;
 }
 
 .modal header {
     justify-content: space-between;
+    height: auto;
     width: 100%;
 }
 
@@ -71,8 +77,9 @@
 
 .modal header h2 {
     font-size: 64px;
+    margin: 0;
     font-weight: normal;
-    text-align: center;
+    text-align: start;
 }
 
 form {
@@ -100,8 +107,11 @@ form input {
     height: 68px;
     border: none;
     border-radius: 5px;
+    font-size: 24px;
 }
-
+.message-modal{
+    height: 125px;
+}
 .images-photographer{
     display: flex;
     flex-wrap: wrap;
@@ -168,4 +178,8 @@ form input {
     min-width: 350px;
     object-fit: cover;
 
+}
+
+.send-button{
+    min-height: 69px;
 }

@@ -28,15 +28,16 @@ function displayPhotographer(value) {
         }
     });
 
-    let firstName = photographer.name.split(' ')[0];   
+    let firstName = photographer.name.split(' ')[0];
     let pictures = [];
     value.media.forEach(el => {
         if (Id == el.photographerId) {
-            pictures.push(el)         
+            pictures.push(el)
         }
     });
     pictures.sort(byLikes);
     const headerPhotographe = document.querySelector('#main');
+    const contactForm = document.querySelector('#contact_modal');
     const portrait = photographer.portrait;
     const picture = `assets/photographers/${portrait}`;
     headerPhotographe.innerHTML =
@@ -68,45 +69,75 @@ function displayPhotographer(value) {
     </div>     
     
         `;
+
+
+    contactForm.innerHTML = `
+    <div class="modal">
+    <header>
+      <h2>Contactez-moi <br> ${photographer.name}</h2>
+      <img src="assets/icons/close.svg" onclick="closeModal()" />
+    </header>
+    <form>
+      <div>
+        <label>Prénom</label>
+        <input id="first"  name="first"/>
+      </div>
+      <div>
+        <label >Nom</label>
+        <input id="last"  name="last"/>
+      </div>
+      <div>
+        <label>Email</label>
+        <input id="email"  name="email" />
+      </div>
+      <div>
+        <label>Votre message</label>
+        <input id="message"  name="message" class="message-modal" />
+      </div>
+      <button class="contact_button send-button" type="button" onclick="sendModal()">Envoyer</button>
+    </form>
+    
+  </div>`
     sort(pictures, firstName);
     addPicture(firstName, pictures);
-    addLike(pictures);
 }
 
 function addPicture(firstName, pictures) {
     let images = document.querySelector('.images-photographer');
     images.innerHTML = "";
-    pictures.forEach(element => {        
-    if (element.image){
-        images.innerHTML +=  `<figure>
+    pictures.forEach(element => {
+        if (element.image) {
+            images.innerHTML += `<figure>
         <img class="img-photographer" src="assets/${firstName}/${element.image}" alt=${element.title}>
-        <figcaption class="img-legend">${element.title}<span> ${element.likes}<i class="fa-solid fa-heart"></i></span></figcaption>
+        <figcaption class="img-legend">${element.title}<span class="likes-number"> ${element.likes}<i class="fa-solid fa-heart"></i></span></figcaption>
     </figure>`;
-    }
-    else {
-        images.innerHTML +=  `
+        }
+        else {
+            images.innerHTML += `
         <figure>
              <video class="video-photographer" controls width="350" height="300">
                  <source src="assets/${firstName}/${element.video}" type="video/mp4">                            
              </video>
-             <figcaption class="img-legend">${element.title}<span> ${element.likes}<i class="fa-solid fa-heart"></i></span></figcaption>
+             <figcaption class="img-legend">${element.title}<span class="likes-number"> ${element.likes}<i class="fa-solid fa-heart"></i></span></figcaption>
          </figure>
      `;
-    }
-   });
+        }
+    });
+    addLike(pictures);
 }
 
 function addLike(pictures) {
     let likeBtn = document.querySelectorAll(".fa-heart");
     let likeNumber = document.querySelectorAll("span");
     let likeTotalUpdate = document.querySelector(".likes-total-number")
-
+    let b = JSON.parse(JSON.stringify(pictures));
+    likeTotalUpdate.textContent = totalLikes(pictures);
     for (let y = 0; y < likeBtn.length; y++) {
-        likeBtn[y].addEventListener("click", () => {          
-            let a = pictures[y].likes + 1;         
-            pictures[y].likes = a
-            likeNumber[y].innerHTML = `<span> ${a}<i class="fa-solid fa-heart"></i></span></figcaption>`;            
-            likeTotalUpdate.textContent = totalLikes(pictures)
+        likeBtn[y].addEventListener("click", () => {
+            let a = b[y].likes + 1;
+            b[y].likes = a;
+            likeNumber[y].innerHTML = `<span> ${a}<i class="fa-solid fa-heart"></i></span></figcaption>`;
+            likeTotalUpdate.textContent = totalLikes(b)
         })
 
     };
