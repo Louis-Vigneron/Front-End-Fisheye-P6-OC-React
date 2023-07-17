@@ -14,7 +14,6 @@ if (send && modal) {
     send.addEventListener("click", sendModal())
 }
 
-
 function sendModal() {
     const first = document.getElementById("first");
     const last = document.getElementById("last");

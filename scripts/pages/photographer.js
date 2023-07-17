@@ -41,8 +41,7 @@ function displayPhotographer(value) {
     const portrait = photographer.portrait;
     const picture = `assets/photographers/${portrait}`;
     headerPhotographe.innerHTML =
-        `
-    
+        `   
     <div class="photograph-header">
         <div>
             <h2>${photographer.name}</h2>
@@ -59,11 +58,9 @@ function displayPhotographer(value) {
         <option value="Date">Date</option>
         <option value="Titre">Titre</option>
     </select>
-    <div class="images-photographer">
-    
-    </div>
-    <div class="total-likes">
-   
+    <div class="images-photographer"></div>
+    <div class="lightBox"></div>
+    <div class="total-likes">   
         <p><span class="likes-total-number">${totalLikes(pictures)}</span><i class="fa-solid fa-heart"></i> </p>
         <p>${photographer.price}€ / jour</p>
     </div>     
@@ -99,7 +96,8 @@ function displayPhotographer(value) {
     
   </div>`
     sort(pictures, firstName);
-    addPicture(firstName, pictures);
+    addPicture(firstName, pictures);    
+    
 }
 
 function addPicture(firstName, pictures) {
@@ -115,7 +113,7 @@ function addPicture(firstName, pictures) {
         else {
             images.innerHTML += `
         <figure>
-             <video class="video-photographer" controls width="350" height="300">
+             <video class="img-photographer" controls width="350" height="300">
                  <source src="assets/${firstName}/${element.video}" type="video/mp4">                            
              </video>
              <figcaption class="img-legend">${element.title}<span class="likes-number"> ${element.likes}<i class="fa-solid fa-heart"></i></span></figcaption>
@@ -124,6 +122,7 @@ function addPicture(firstName, pictures) {
         }
     });
     addLike(pictures);
+    displayLightBox(pictures, firstName);
 }
 
 function addLike(pictures) {
@@ -200,4 +199,78 @@ function totalLikes(pictures) {
         totalLikes += el.likes;
     });
     return totalLikes
+}
+
+function displayLightBox(pictures, firstName){
+    const picture = document.querySelectorAll(".img-photographer");
+    const lightBox = document.querySelector(".lightBox");
+    const totalLikesHide = document.querySelector(".total-likes");
+    for(let x = 0; picture.length > x; x ++) {   
+        picture[x].addEventListener("click",()=>{               
+        lightBox.style.display = "block";    
+        totalLikesHide.style.display = "none"; 
+        if (pictures[x].image) {
+        
+            lightBox.innerHTML = `       
+            <div class="nextTo">
+                <img id="right" src="assets/right.svg" alt="right cross">
+                <figure class="figure-carrousel">
+                    <img class="img-carrousel" src="assets/${firstName}/${pictures[x].image}" alt=${pictures[x].title}>
+                    <figcaption class="img-legend-carrousel">${pictures[x].title}</figcaption>
+                </figure>
+                <img id="left" src="assets/left.svg" alt="left cross">
+                <div class="cross">
+                    <div class="cross1"></div>
+                    <div class="cross2"></div>
+                </div>
+            </div> 
+                `;
+            hideLightBox()
+            Carrousel(x)
+        }
+        else {                        
+            lightBox.innerHTML = `
+            <div class="nextTo">
+                <img id="right" src="assets/right.svg" alt="right cross">
+                <figure class="figure-carrousel">
+                    <video class="img-carrousel" controls width="350" height="300">
+                        <source src="assets/${firstName}/${pictures[x].video}" type="video/mp4">                            
+                    </video>
+                    <figcaption class="img-legend-carrousel">${pictures[x].title}</figcaption>
+                </figure>
+                <img id="left" src="assets/left.svg" alt="left cross">
+                <div class="cross">
+                    <div class="cross1"></div>
+                    <div class="cross2"></div>
+                </div>
+            </div>
+                `;
+            hideLightBox()  
+            Carrousel(x)
+        }
+     })}       
+        
+}
+
+function hideLightBox(){
+    const cross = document.querySelector(".cross");
+    const lightBox = document.querySelector(".lightBox");    
+    const totalLikesDisplay = document.querySelector(".total-likes");
+    cross.addEventListener("click",()=>{
+        lightBox.style.display = "none";  
+        totalLikesDisplay.style.display = "flex"; 
+    })
+}
+
+function Carrousel(x){
+    const left = document.getElementById("left");
+    const right = document.getElementById("right");
+
+    left.addEventListener('click',()=>{
+        console.log(x)
+        console.log("droite")
+    })
+    right.addEventListener('click',()=>{
+        console.log("gauche")
+    })
 }
