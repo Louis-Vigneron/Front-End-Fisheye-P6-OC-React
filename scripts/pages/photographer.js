@@ -96,8 +96,8 @@ function displayPhotographer(value) {
     
   </div>`
     sort(pictures, firstName);
-    addPicture(firstName, pictures);    
-    
+    addPicture(firstName, pictures);
+
 }
 
 function addPicture(firstName, pictures) {
@@ -201,17 +201,28 @@ function totalLikes(pictures) {
     return totalLikes
 }
 
-function displayLightBox(pictures, firstName){
+function displayLightBox(pictures, firstName) {
     const picture = document.querySelectorAll(".img-photographer");
     const lightBox = document.querySelector(".lightBox");
     const totalLikesHide = document.querySelector(".total-likes");
-    for(let x = 0; picture.length > x; x ++) {   
-        picture[x].addEventListener("click",()=>{               
-        lightBox.style.display = "block";    
-        totalLikesHide.style.display = "none"; 
-        if (pictures[x].image) {
-        
-            lightBox.innerHTML = `       
+    for (let x = 0; picture.length > x; x++) {
+        picture[x].addEventListener("click", () => {
+            lightBox.style.display = "block";
+            totalLikesHide.style.display = "none";
+            if (pictures[x].image) {
+                displayImageCarrousel(firstName, pictures, x)
+            }
+            else {
+                displayVideoCarrousel(firstName, pictures, x)
+            }          
+        })
+    }
+
+}
+
+function displayImageCarrousel(firstName, pictures, x) {
+    const lightBox = document.querySelector(".lightBox");
+    lightBox.innerHTML = `       
             <div class="nextTo">
                 <img id="right" src="assets/right.svg" alt="right cross">
                 <figure class="figure-carrousel">
@@ -225,52 +236,66 @@ function displayLightBox(pictures, firstName){
                 </div>
             </div> 
                 `;
-            hideLightBox()
-            Carrousel(x)
-        }
-        else {                        
-            lightBox.innerHTML = `
-            <div class="nextTo">
-                <img id="right" src="assets/right.svg" alt="right cross">
-                <figure class="figure-carrousel">
-                    <video class="img-carrousel" controls width="350" height="300">
-                        <source src="assets/${firstName}/${pictures[x].video}" type="video/mp4">                            
-                    </video>
-                    <figcaption class="img-legend-carrousel">${pictures[x].title}</figcaption>
-                </figure>
-                <img id="left" src="assets/left.svg" alt="left cross">
-                <div class="cross">
-                    <div class="cross1"></div>
-                    <div class="cross2"></div>
-                </div>
-            </div>
-                `;
-            hideLightBox()  
-            Carrousel(x)
-        }
-     })}       
-        
+                hideLightBox()
+                Carrousel(pictures,firstName, x)
 }
 
-function hideLightBox(){
+function displayVideoCarrousel(firstName, pictures, x) {
+    const lightBox = document.querySelector(".lightBox");
+    lightBox.innerHTML = `
+    <div class="nextTo">
+        <img id="right" src="assets/right.svg" alt="right cross">
+        <figure class="figure-carrousel">
+            <video class="img-carrousel" controls width="350" height="300">
+                <source src="assets/${firstName}/${pictures[x].video}" type="video/mp4">                            
+            </video>
+            <figcaption class="img-legend-carrousel">${pictures[x].title}</figcaption>
+        </figure>
+        <img id="left" src="assets/left.svg" alt="left cross">
+        <div class="cross">
+            <div class="cross1"></div>
+            <div class="cross2"></div>
+        </div>
+    </div>
+        `;
+        hideLightBox()
+        Carrousel(pictures,firstName, x)
+}
+
+function hideLightBox() {
     const cross = document.querySelector(".cross");
-    const lightBox = document.querySelector(".lightBox");    
+    const lightBox = document.querySelector(".lightBox");
     const totalLikesDisplay = document.querySelector(".total-likes");
-    cross.addEventListener("click",()=>{
-        lightBox.style.display = "none";  
-        totalLikesDisplay.style.display = "flex"; 
+    cross.addEventListener("click", () => {
+        lightBox.style.display = "none";
+        totalLikesDisplay.style.display = "flex";
     })
 }
 
-function Carrousel(x){
+function Carrousel(pictures,firstName, x) {
     const left = document.getElementById("left");
     const right = document.getElementById("right");
+    let index = x;
 
-    left.addEventListener('click',()=>{
-        console.log(x)
-        console.log("droite")
+    left.addEventListener('click', () => {     
+        index = (index + 1) % pictures.length; 
+        if (pictures[index].image) {
+            displayImageCarrousel(firstName, pictures, index)
+        }
+        else {
+            displayVideoCarrousel(firstName, pictures, index)
+        }   
+       
+        displayImageCarrousel(firstName, pictures, index)
+        console.log('ici')
     })
-    right.addEventListener('click',()=>{
-        console.log("gauche")
+    right.addEventListener('click', () => {        
+        index = (index -1 + pictures.length) % pictures.length;
+        if (pictures[index].image) {
+            displayImageCarrousel(firstName, pictures, index)
+        }
+        else {
+            displayVideoCarrousel(firstName, pictures, index)
+        }   
     })
 }
