@@ -214,7 +214,7 @@ function displayLightBox(pictures, firstName) {
             }
             else {
                 displayVideoCarrousel(firstName, pictures, x)
-            }          
+            }
         })
     }
 
@@ -224,42 +224,42 @@ function displayImageCarrousel(firstName, pictures, x) {
     const lightBox = document.querySelector(".lightBox");
     lightBox.innerHTML = `       
             <div class="nextTo">
-                <img id="right" src="assets/right.svg" alt="right cross">
+               <img id="left" src="assets/left.svg" alt="left cross">
                 <figure class="figure-carrousel">
                     <img class="img-carrousel" src="assets/${firstName}/${pictures[x].image}" alt=${pictures[x].title}>
                     <figcaption class="img-legend-carrousel">${pictures[x].title}</figcaption>
                 </figure>
-                <img id="left" src="assets/left.svg" alt="left cross">
+                <img id="right" src="assets/right.svg" alt="right cross">
                 <div class="cross">
                     <div class="cross1"></div>
                     <div class="cross2"></div>
                 </div>
             </div> 
                 `;
-                hideLightBox()
-                Carrousel(pictures,firstName, x)
+    hideLightBox()
+    Carrousel(pictures, firstName, x)
 }
 
 function displayVideoCarrousel(firstName, pictures, x) {
     const lightBox = document.querySelector(".lightBox");
     lightBox.innerHTML = `
     <div class="nextTo">
-        <img id="right" src="assets/right.svg" alt="right cross">
+        <img id="left" src="assets/left.svg" alt="left cross">
         <figure class="figure-carrousel">
             <video class="img-carrousel" controls width="350" height="300">
                 <source src="assets/${firstName}/${pictures[x].video}" type="video/mp4">                            
             </video>
             <figcaption class="img-legend-carrousel">${pictures[x].title}</figcaption>
         </figure>
-        <img id="left" src="assets/left.svg" alt="left cross">
+        <img id="right" src="assets/right.svg" alt="right cross">
         <div class="cross">
             <div class="cross1"></div>
             <div class="cross2"></div>
         </div>
     </div>
         `;
-        hideLightBox()
-        Carrousel(pictures,firstName, x)
+    hideLightBox()
+    Carrousel(pictures, firstName, x)
 }
 
 function hideLightBox() {
@@ -270,32 +270,50 @@ function hideLightBox() {
         lightBox.style.display = "none";
         totalLikesDisplay.style.display = "flex";
     })
+    document.addEventListener('keydown', (e) => {
+        if (e.key === "Escape"){
+            lightBox.style.display = "none";
+            totalLikesDisplay.style.display = "flex";
+        }
+    })
 }
 
-function Carrousel(pictures,firstName, x) {
+function Carrousel(pictures, firstName, x) {
     const left = document.getElementById("left");
     const right = document.getElementById("right");
     let index = x;
 
-    left.addEventListener('click', () => {     
-        index = (index + 1) % pictures.length; 
-        if (pictures[index].image) {
-            displayImageCarrousel(firstName, pictures, index)
-        }
-        else {
-            displayVideoCarrousel(firstName, pictures, index)
-        }   
-       
-        displayImageCarrousel(firstName, pictures, index)
-        console.log('ici')
+    left.addEventListener('click', () => {
+       previousPicture(firstName, pictures, index)
     })
     right.addEventListener('click', () => {        
-        index = (index -1 + pictures.length) % pictures.length;
-        if (pictures[index].image) {
-            displayImageCarrousel(firstName, pictures, index)
-        }
-        else {
-            displayVideoCarrousel(firstName, pictures, index)
-        }   
+        nextPicture(firstName, pictures, index)
     })
+    document.addEventListener('keydown', (e) => {
+        if (e.key === "ArrowLeft") {
+            previousPicture(firstName, pictures, index)
+        } else if (e.key === "ArrowRight") {
+            nextPicture(firstName, pictures, index)
+        }
+    })
+}
+
+function previousPicture(firstName, pictures, index){
+    index = (index - 1 + pictures.length) % pictures.length;
+    if (pictures[index].image) {
+        displayImageCarrousel(firstName, pictures, index)
+    }
+    else {
+        displayVideoCarrousel(firstName, pictures, index)
+    }
+}
+
+function nextPicture(firstName, pictures, index){
+    index = (index + 1) % pictures.length;
+    if (pictures[index].image) {
+        displayImageCarrousel(firstName, pictures, index)
+    }
+    else {
+        displayVideoCarrousel(firstName, pictures, index)
+    }     
 }
