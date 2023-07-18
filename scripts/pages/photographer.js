@@ -271,7 +271,7 @@ function hideLightBox() {
         totalLikesDisplay.style.display = "flex";
     })
     document.addEventListener('keydown', (e) => {
-        if (e.key === "Escape"){
+        if (e.key === "Escape") {
             lightBox.style.display = "none";
             totalLikesDisplay.style.display = "flex";
         }
@@ -284,9 +284,9 @@ function Carrousel(pictures, firstName, x) {
     let index = x;
 
     left.addEventListener('click', () => {
-       previousPicture(firstName, pictures, index)
+        previousPicture(firstName, pictures, index)
     })
-    right.addEventListener('click', () => {        
+    right.addEventListener('click', () => {
         nextPicture(firstName, pictures, index)
     })
     document.addEventListener('keydown', (e) => {
@@ -298,7 +298,7 @@ function Carrousel(pictures, firstName, x) {
     })
 }
 
-function previousPicture(firstName, pictures, index){
+function previousPicture(firstName, pictures, index) {
     index = (index - 1 + pictures.length) % pictures.length;
     if (pictures[index].image) {
         displayImageCarrousel(firstName, pictures, index)
@@ -308,12 +308,12 @@ function previousPicture(firstName, pictures, index){
     }
 }
 
-function nextPicture(firstName, pictures, index){
+function nextPicture(firstName, pictures, index) {
     index = (index + 1) % pictures.length;
     if (pictures[index].image) {
         displayImageCarrousel(firstName, pictures, index)
     }
     else {
         displayVideoCarrousel(firstName, pictures, index)
-    }     
+    }
 }
