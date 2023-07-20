@@ -162,11 +162,47 @@ form input {
 }
 
 .sort{
+    display: flex;
+    margin-top: 50px;
+}
+
+.sort-title{
     font-size: 18px;
     font-weight: 700;
     margin: 0 50px 0 75px;
+    height: 50px;
+    display: flex;
+    align-items: center;
 }
 
+.sort-button{
+    border: none;
+    background-color: #901C1C;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 5px;    
+    box-shadow: 0px 4px 4px 0px #00000040; 
+    padding: 20px 25px;
+    padding-right: 15px;
+    width: 200px;
+    text-align: start;
+}
+.fa-chevron-up{
+    position: relative;
+    left: 35px;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+}
+.fa-chevron-down{
+    position: relative;
+    top: 20px;
+    right: 50px;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+}
 .sort-select{
     background-color: #901C1C;
     font-size: 18px;
@@ -176,9 +212,19 @@ form input {
     padding: 15px;
     border-radius: 5px;
     box-shadow: 0px 4px 4px 0px #00000040; 
-    margin: 25px 0;  
+    margin: 0;
+    display: none;
 }
 
+.sort-option{
+    list-style: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.sort-option-border{
+    border-bottom: 1px solid white;
+}
 .send-button{
     min-height: 69px;
 }
