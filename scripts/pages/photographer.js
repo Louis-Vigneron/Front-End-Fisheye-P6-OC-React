@@ -28,18 +28,20 @@ function displayPhotographer(value) {
         }
     });
 
-    let firstName = photographer.name.split(' ')[0];
+    let firstName  = photographer.name.split(' ')[0];
     let pictures = [];
     value.media.forEach(el => {
         if (Id == el.photographerId) {
-            pictures.push(el)
+            pictures.push(el)             
         }
-    });
+    });    
+
     pictures.sort(byLikes);
     const headerPhotographe = document.querySelector('#main');
     const contactForm = document.querySelector('#contact_modal');
     const portrait = photographer.portrait;
     const picture = `assets/photographers/${portrait}`;
+    
     headerPhotographe.innerHTML =
         `   
     <div class="photograph-header">
@@ -56,10 +58,11 @@ function displayPhotographer(value) {
         <h2 class="sort-title">Trier par</h2>
         <button class="sort-button" id="sort-button" aria-haspopup="listbox" role="button" aria-expanded="false" onclick="displaySortOptions()">Popularité </button><i class="fa-solid fa-chevron-down"></i>
         <ul class="sort-select" id="sort-select">
-            <li id="Popularité" class="sort-option sort-option-border" onclick="selectSortOption('Popularité')" role="option" aria-selected="false" aria-labelledby="sort-button">Popularité <i class="fa-solid fa-chevron-up"></i></li>
-            <li id="Date" class="sort-option sort-option-border" onclick="selectSortOption('Date')" role="option" aria-selected="false">Date</li>
-            <li id="Titre" class="sort-option" onclick="selectSortOption('Titre')" role="option" aria-selected="false">Titre</li>
+            <li id="Popularité" class="sort-option sort-option-border" onclick="selectSortOption('Popularité','${encodeURIComponent(JSON.stringify(pictures))}','${encodeURIComponent(JSON.stringify(firstName))}')" role="option" aria-selected="false" aria-labelledby="sort-button">Popularité</li>
+            <li id="Date" class="sort-option sort-option-border" onclick="selectSortOption('Date','${encodeURIComponent(JSON.stringify(pictures))}', '${encodeURIComponent(JSON.stringify(firstName))}')" role="option" aria-selected="false">Date</li>
+            <li id="Titre" class="sort-option" onclick="selectSortOption('Titre','${encodeURIComponent(JSON.stringify(pictures))}', '${encodeURIComponent(JSON.stringify(firstName))}')" role="option" aria-selected="false">Titre</li>
         </ul>
+        <i class="fa-solid fa-chevron-up"></i>
     </div>
     <div class="images-photographer"></div>
     <div class="lightBox"></div>
@@ -96,8 +99,8 @@ function displayPhotographer(value) {
     </form>
     
   </div>`
-    
-    addPicture(firstName, pictures);    
+    addPicture(pictures, firstName);      
+   
 }
 
 function displaySortOptions(){   
@@ -111,7 +114,7 @@ function displaySortOptions(){
     arrowDown.style.display = "none"; 
 }
 
-function selectSortOption(sortValue){
+function selectSortOption(sortValue, picturesJSON, firstNameJSON){
     const listOptions = document.getElementById('sort-select');
     const options = document.querySelectorAll('[role="option"]');
     const button = document.getElementById('sort-button'); 
@@ -119,38 +122,37 @@ function selectSortOption(sortValue){
     const expanded = listOptions.getAttribute('aria-expanded') === 'true';
     listOptions.setAttribute('aria-expanded', !expanded);
     options.forEach(el => {
-        let isSelected = el.id === sortValue;
+        let isSelected = el.id === sortValue;        
         el.setAttribute('aria-selected', isSelected);
     });
     const menuButton = document.getElementById('sort-button');
-    let selectedOption = listOptions.querySelector('[aria-selected="true"]').textContent;
-    console.log(selectedOption)
+    let selectedOption = listOptions.querySelector('[aria-selected="true"]').textContent;    
     menuButton.textContent = selectedOption;    
     listOptions.style.display = expanded ? 'none' : 'block';
     button.style.display = "block"; 
-    arrowDown.style.display = "block";    
-    sort(sortValue) 
+    arrowDown.style.display = "block";  
+    const decodedPicturesJSON = decodeURIComponent(picturesJSON);
+    const pictures = JSON.parse(decodedPicturesJSON);
+    const decodedFirstNameJSON = decodeURIComponent(firstNameJSON);
+    const firstName = JSON.parse(decodedFirstNameJSON);
+    sort(selectedOption, pictures, firstName)
 }
 
-function addPicture(firstName, pictures) {
+function addPicture(pictures, firstName) {
     let images = document.querySelector('.images-photographer');
     images.innerHTML = "";
     pictures.forEach(element => {
         if (element.image) {
-            images.innerHTML += `<figure >
-        <img tabindex="0" class="img-photographer" src="assets/${firstName}/${element.image}" alt=${element.title}>
-        <figcaption class="img-legend">${element.title}<span class="likes-number"> ${element.likes}<i tabindex="0" class="fa-solid fa-heart"></i></span></figcaption>
-    </figure>`;
+            let picture = new Picture(element, firstName);
+            let pictureCard = new PictureCard(picture);
+            let pictureCardHtml = pictureCard.createPictureCard();
+            images.innerHTML += pictureCardHtml;
         }
         else {
-            images.innerHTML += `
-        <figure>
-             <video tabindex="0" class="img-photographer" controls width="350" height="300">
-                 <source src="assets/${firstName}/${element.video}" type="video/mp4">                            
-             </video>
-             <figcaption class="img-legend">${element.title}<span class="likes-number"> ${element.likes}<i tabindex="0" class="fa-solid fa-heart"></i></span></figcaption>
-         </figure>
-     `;
+            let video = new Video(element, firstName);
+            let videoCard = new VideoCard(video);
+            let videoCardHtml = videoCard.createVideoCard();
+            images.innerHTML += videoCardHtml;
         }
     });
     addLike(pictures);
@@ -181,25 +183,20 @@ function addLike(pictures) {
     };
 }
 
-function sort(pictures, firstName) {
-    let optionPick = document.querySelector("#sort-button");
-    optionPick.addEventListener("change", () => {
-        if (optionPick.value == "Popularité") {
+function sort(options, pictures, firstName) {       
+      
+        if (options == "Popularité") {            
             pictures.sort(byLikes);
-            addPicture(firstName, pictures);
+            addPicture(pictures, firstName);
         }
-        if (optionPick.value == "Date") {
+        if (options == "Date") {
             pictures.sort(byDate);
-            addPicture(firstName, pictures);
+            addPicture(pictures, firstName);
         }
-        if (optionPick.value == "Titre") {
+        if (options == "Titre") {
             pictures.sort(byName);
-            addPicture(firstName, pictures);
+            addPicture(pictures, firstName);
         }
-    })
-
-
-
 }
 
 function byLikes(a, b) {
@@ -244,15 +241,16 @@ function displayLightBox(pictures, firstName) {
     const picture = document.querySelectorAll(".img-photographer");
     const lightBox = document.querySelector(".lightBox");
     const totalLikesHide = document.querySelector(".total-likes");
+    
     for (let x = 0; picture.length > x; x++) {
         picture[x].addEventListener("click", () => {
             lightBox.style.display = "block";
             totalLikesHide.style.display = "none";
             if (pictures[x].image) {
-                displayImageCarrousel(firstName, pictures, x)
+                displayImageCarrousel( pictures, x, firstName)
             }
             else {
-                displayVideoCarrousel(firstName, pictures, x)
+                displayVideoCarrousel( pictures, x, firstName)
             }
         })      
         picture[x].addEventListener("keydown",(e)=>{
@@ -260,18 +258,18 @@ function displayLightBox(pictures, firstName) {
                 lightBox.style.display = "block";
                 totalLikesHide.style.display = "none";
                 if (pictures[x].image) {
-                    displayImageCarrousel(firstName, pictures, x)
+                    displayImageCarrousel( pictures, x, firstName)
                 }
                 else {
-                    displayVideoCarrousel(firstName, pictures, x)
+                    displayVideoCarrousel( pictures, x, firstName)
                 }
         }})
     } 
    
 }
 
-function displayImageCarrousel(firstName, pictures, x) {
-    const lightBox = document.querySelector(".lightBox");
+function displayImageCarrousel( pictures, x, firstName) {
+    const lightBox = document.querySelector(".lightBox");    
     lightBox.innerHTML = `       
             <div class="nextTo">
                <img tabindex="0" id="left" src="assets/left.svg" alt="left cross">
@@ -287,10 +285,10 @@ function displayImageCarrousel(firstName, pictures, x) {
             </div> 
                 `;
     hideLightBox()
-    Carrousel(pictures, firstName, x)
+    Carrousel(pictures, x, firstName)
 }
 
-function displayVideoCarrousel(firstName, pictures, x) {
+function displayVideoCarrousel( pictures, x, firstName) {
     const lightBox = document.querySelector(".lightBox");
     lightBox.innerHTML = `
     <div class="nextTo">
@@ -309,7 +307,7 @@ function displayVideoCarrousel(firstName, pictures, x) {
     </div>
         `;
     hideLightBox()
-    Carrousel(pictures, firstName, x)
+    Carrousel(pictures, x, firstName)
 }
 
 function hideLightBox() {
@@ -328,45 +326,49 @@ function hideLightBox() {
     })
 }
 
-function Carrousel(pictures, firstName, x) {
+function Carrousel(pictures,  x, firstName) {
     const left = document.getElementById("left");
     const right = document.getElementById("right");
     let index = x;
 
     left.addEventListener('click', () => {
-        previousPicture(firstName, pictures, index)
+        previousPicture(pictures, index, firstName)
     })
     right.addEventListener('click', () => {
-        nextPicture(firstName, pictures, index)
+        nextPicture(pictures, index, firstName)
     })
     document.addEventListener('keydown', (e) => {
         if (e.key === "ArrowLeft") {
-            previousPicture(firstName, pictures, index)
+            previousPicture(pictures, index, firstName)
         } else if (e.key === "ArrowRight") {
-            nextPicture(firstName, pictures, index)
+            nextPicture(pictures, index, firstName)
         }
     })
 }
 
-function previousPicture(firstName, pictures, index) {
+function previousPicture( pictures, index, firstName) {
     index = (index - 1 + pictures.length) % pictures.length;
     if (pictures[index].image) {
-        displayImageCarrousel(firstName, pictures, index)
+        displayImageCarrousel(pictures, index, firstName)
     }
     else {
-        displayVideoCarrousel(firstName, pictures, index)
+        displayVideoCarrousel(pictures, index, firstName)
     }
 }
 
-function nextPicture(firstName, pictures, index) {
+function nextPicture( pictures, index, firstName) {
     index = (index + 1) % pictures.length;
     if (pictures[index].image) {
-        displayImageCarrousel(firstName, pictures, index)
+        displayImageCarrousel(pictures, index, firstName)
     }
     else {
-        displayVideoCarrousel(firstName, pictures, index)
+        displayVideoCarrousel(pictures, index, firstName)
     }
 }
+
+
+
+
 
 
 

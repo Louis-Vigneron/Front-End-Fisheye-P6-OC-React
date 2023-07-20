@@ -16,10 +16,11 @@
      function displayData(photographers) {
         const photographersSection = document.querySelector(".photographer_section");
 
-        photographers.forEach((photographer) => {
-            const photographerModel = photographerTemplate(photographer);
-            const userCardDOM = photographerModel.getUserCardDOM();
-            photographersSection.appendChild(userCardDOM);
+        photographers.forEach((photographerData) => {
+            let photographer = new Photographer(photographerData);
+            let photographerCard = new PhotographerCard(photographer);
+            let photographerCardHtml = photographerCard.createPhotographerCard();
+            photographersSection.innerHTML += photographerCardHtml;
         });
     }
 

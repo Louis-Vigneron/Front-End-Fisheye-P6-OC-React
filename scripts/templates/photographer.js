@@ -1,32 +1,37 @@
-function photographerTemplate(data) {
-    const { name, portrait, city, country, tagline, price, id } = data;
-
-    const picture = `assets/photographers/${portrait}`;
-
-    function getUserCardDOM() {
-
-        const a = document.createElement('a');
-        a.href = `./photographer.html?${id}`;
-        const article = document.createElement('article');
-        const img = document.createElement('img');
-        img.setAttribute("src", picture)
-        img.alt = name;
-        const h2 = document.createElement('h2');
-        h2.textContent = name;
-        const pCity = document.createElement('h3');
-        pCity.textContent = `${city}, ${country}`;
-        const pTagline = document.createElement('p');
-        pTagline.textContent = tagline;
-        const pPrice = document.createElement('span');
-        pPrice.textContent = `${price}€/jour`;
-        a.appendChild(article);
-        article.appendChild(img);
-        article.appendChild(h2);
-        article.appendChild(pCity);
-        article.appendChild(pTagline);
-        article.appendChild(pPrice);
-        return (a);
+class Photographer {
+    constructor(data) {
+        const { name, portrait, city, country, tagline, price, id } = data;
+        this.Name = name
+        this.Id = id
+        this.City = city
+        this.Country = country
+        this.TagLine = tagline
+        this.Price = price
+        this.Portrait = portrait
     }
-    return { name, portrait, city, country, tagline, price, id, getUserCardDOM }
 }
+
+class PhotographerCard {
+    constructor(photographer) {
+        this.photographer = photographer
+    }
+
+    createPhotographerCard() {
+        const photographerCard = `
+            <a href="./photographer.html?${this.photographer.Id}">
+                <article>
+                    <img src="assets/photographers/${this.photographer.Portrait}" alt="${this.photographer.Name}">
+                    <h2>${this.photographer.Name}</h2>
+                    <h3>${this.photographer.City}, ${this.Country}</h3>
+                    <p>${this.photographer.TagLine}</p><span>${this.photographer.Price}€/jour</span>
+                </article>
+            </a>
+        
+        `
+        return photographerCard
+    }
+}
+
+
+
 
