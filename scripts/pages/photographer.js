@@ -76,7 +76,7 @@ function displayPhotographer(value) {
     <div class="modal">
     <header>
       <h2>Contactez-moi <br> ${photographer.name}</h2>
-      <img src="assets/icons/close.svg" onclick="closeModal()" />
+      <img class="modal-close" src="assets/icons/close.svg" tabindex="0" onclick="closeModal()" onkeypress="handleKeyPress(event)" />
     </header>
     <form>
       <div>
@@ -241,6 +241,7 @@ function displayLightBox(pictures, firstName) {
     const picture = document.querySelectorAll(".img-photographer");
     const lightBox = document.querySelector(".lightBox");
     const totalLikesHide = document.querySelector(".total-likes");
+    lightBox.setAttribute("tabindex", "0"); 
     
     for (let x = 0; picture.length > x; x++) {
         picture[x].addEventListener("click", () => {
@@ -252,6 +253,7 @@ function displayLightBox(pictures, firstName) {
             else {
                 displayVideoCarrousel( pictures, x, firstName)
             }
+            lightBox.focus();
         })      
         picture[x].addEventListener("keydown",(e)=>{
             if (e.key === "Enter") {
@@ -263,25 +265,30 @@ function displayLightBox(pictures, firstName) {
                 else {
                     displayVideoCarrousel( pictures, x, firstName)
                 }
-        }})
+                lightBox.focus();
+        }}) 
+        
     } 
-   
+  
 }
 
 function displayImageCarrousel( pictures, x, firstName) {
     const lightBox = document.querySelector(".lightBox");    
     lightBox.innerHTML = `       
             <div class="nextTo">
-               <img tabindex="0" id="left" src="assets/left.svg" alt="left cross">
+            <button class="button-carrousel" id="left"><img  src="assets/left.svg" alt="left cross"></button>
+               
                 <figure class="figure-carrousel">
                     <img class="img-carrousel" src="assets/${firstName}/${pictures[x].image}" alt=${pictures[x].title}>
                     <figcaption class="img-legend-carrousel">${pictures[x].title}</figcaption>
                 </figure>
-                <img tabindex="0" id="right" src="assets/right.svg" alt="right cross">
+                <button class="button-carrousel" id="right"><img  src="assets/right.svg" alt="right cross"></button>
+                
                 <div tabindex="0" class="cross">
-                    <div class="cross1"></div>
-                    <div class="cross2"></div>
-                </div>
+                <div class="cross1"></div>
+                <div class="cross2"></div>
+            </div>
+                
             </div> 
                 `;
     hideLightBox()
@@ -292,14 +299,14 @@ function displayVideoCarrousel( pictures, x, firstName) {
     const lightBox = document.querySelector(".lightBox");
     lightBox.innerHTML = `
     <div class="nextTo">
-        <img tabindex="0" id="left" src="assets/left.svg" alt="left cross">
+    <button class="button-carrousel" id="left"><img  src="assets/left.svg" alt="left cross"></button>
         <figure class="figure-carrousel">
             <video class="img-carrousel" controls width="350" height="300">
                 <source src="assets/${firstName}/${pictures[x].video}" type="video/mp4">                            
             </video>
             <figcaption class="img-legend-carrousel">${pictures[x].title}</figcaption>
         </figure>
-        <img tabindex="0" id="right" src="assets/right.svg" alt="right cross">
+        <button class="button-carrousel" id="right"><img  src="assets/right.svg" alt="right cross"></button>
         <div tabindex="0" class="cross">
             <div class="cross1"></div>
             <div class="cross2"></div>
@@ -322,6 +329,16 @@ function hideLightBox() {
         if (e.key === "Escape") {
             lightBox.style.display = "none";
             totalLikesDisplay.style.display = "flex";
+        }
+    })
+    document.addEventListener('keyup', (e) => {
+        if (e.key === "Enter") {
+            const focusedElement = document.activeElement
+            if (focusedElement.classList.contains("cross")) {                      
+                lightBox.style.display = "none";
+                totalLikesDisplay.style.display = "flex";
+              }
+            
         }
     })
 }
