@@ -1,10 +1,12 @@
 function displayModal() {
-    const modal = document.getElementById("contact_modal");
+    const modal = document.getElementById("contact_modal");    
     modal.style.display = "block";
+    modal.setAttribute("tabindex", "0"); 
+    modal.focus();
 }
 
 function closeModal() {
-  const modal = document.getElementById("contact_modal");
+  const modal = document.getElementById("contact_modal"); 
   modal.style.display = "none";
 }
 
@@ -19,10 +21,6 @@ const modal = document.getElementById("contact_modal");
 if (send && modal) {
     send.addEventListener("click", sendModal())
 }
-
-
-
-
 
 // function for check input
 function checkInput(input, regex) {
