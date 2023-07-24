@@ -193,11 +193,12 @@ form input {
 }
 .fa-chevron-up{
     position: relative;
-    top: 25px;
+    top: 30px;
     left: 150px;
     color: white;
     font-size: 18px;
     font-weight: 700;
+    z-index: 2;
 }
 .fa-chevron-down{
     position: relative;
@@ -224,11 +225,18 @@ form input {
 }
 
 .sort-option{
-    list-style: none;
+    background-color: #901C1C;
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+    border: none;
     padding: 10px;
+    padding-top: 15px;
     cursor: pointer;
 }
-
+li{    
+    list-style: none;
+}
 .sort-option-border{
     border-bottom: 1px solid white;
 }
