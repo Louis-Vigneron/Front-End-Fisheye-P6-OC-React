@@ -12,7 +12,7 @@ function closeModal() {
 
 // function to manage the enter key on the keyboard
 function handleKeyPress(event) {
-  if (event.key === "Enter") {    
+  if (event.key === "Enter") {
     closeModal();
   }
 }
@@ -39,9 +39,9 @@ function hideError(message) {
 }
 // function for check user input in modal
 function sendModal() {
-  
+
   const modal = document.getElementById("contact_modal");
-  
+
   // regex test
   let regexFirstName = /^([A-Za-z]{2,20})?([-]{0,1})?([A-Za-z]{2,20})$/;
   let regexLastName = /^[A-Za-z]{3,20}$/;
@@ -52,7 +52,7 @@ function sendModal() {
   const lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
   const emailErrorMsg = document.getElementById("emailErrorMsg");
   const messageErrorMsg = document.getElementById("messageErrorMsg");
-  
+
   const first = document.getElementById("first");
   const last = document.getElementById("last");
   const email = document.getElementById("email");
@@ -66,8 +66,8 @@ function sendModal() {
   if (
     !checkInput(first, regexFirstName, firstNameErrorMsg)
     && !checkInput(last, regexLastName, lastNameErrorMsg)
-    && !checkInput(email, regexEmail,emailErrorMsg)
-    && !checkInput(message, regexMessage,messageErrorMsg)) {
+    && !checkInput(email, regexEmail, emailErrorMsg)
+    && !checkInput(message, regexMessage, messageErrorMsg)) {
     console.log("Prénom :", first.value, "Nom :", last.value, "Email :", email.value, "Message:", message.value);
     modal.style.display = "none";
   }

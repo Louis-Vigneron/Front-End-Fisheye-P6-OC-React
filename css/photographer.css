@@ -2,11 +2,11 @@
     display: none;
     height: 100%;
     width: 100%;
-    background-color: rgba(0,0,0,.4);
+    background-color: rgba(0, 0, 0, .4);
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);     
+    transform: translate(-50%, -50%);
     z-index: 3;
 }
 
@@ -90,7 +90,7 @@
     text-align: start;
 }
 
-.modal__form{
+.modal__form {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -99,12 +99,12 @@
     margin-bottom: 26px;
 }
 
-.modal__label{
+.modal__label {
     color: #312E2E;
     font-size: 36px;
 }
 
-.modal__error{
+.modal__error {
     margin: 0;
     color: black;
     font-weight: bold;
@@ -129,10 +129,12 @@ form input {
     border-radius: 5px;
     font-size: 24px;
 }
-.message-modal{
+
+.message-modal {
     height: 125px;
 }
-.images-photographer{
+
+.images-photographer {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -140,13 +142,13 @@ form input {
     z-index: 0;
 }
 
-.img-photographer{
+.img-photographer {
     width: 350px;
     height: 300px;
     object-fit: cover;
 }
 
-.img-legend{
+.img-legend {
     color: #901C1C;
     font-size: 24px;
     display: flex;
@@ -155,15 +157,15 @@ form input {
     width: 350px;
 }
 
-.img-legend span{
+.img-legend span {
     white-space: nowrap;
 }
 
-.fa-solid{
+.fa-solid {
     margin: 0 10px;
 }
 
-.total-likes{
+.total-likes {
     position: sticky;
     display: flex;
     align-items: center;
@@ -176,13 +178,13 @@ form input {
     left: 75%;
 }
 
-.sort{
+.sort {
     display: flex;
     margin-top: 50px;
     height: 61px;
 }
 
-.sort-title{
+.sort-title {
     font-size: 18px;
     font-weight: 700;
     margin: 0 50px 0 75px;
@@ -191,20 +193,21 @@ form input {
     align-items: center;
 }
 
-.sort-button{
+.sort-button {
     border: none;
     background-color: #901C1C;
     color: white;
     font-size: 18px;
     font-weight: 700;
-    border-radius: 5px;    
-    box-shadow: 0px 4px 4px 0px #00000040; 
+    border-radius: 5px;
+    box-shadow: 0px 4px 4px 0px #00000040;
     padding: 20px 25px;
     padding-right: 15px;
     width: 200px;
     text-align: start;
 }
-.fa-chevron-up{
+
+.fa-chevron-up {
     position: relative;
     top: 25px;
     left: 150px;
@@ -213,7 +216,8 @@ form input {
     font-weight: 700;
     z-index: 2;
 }
-.fa-chevron-down{
+
+.fa-chevron-down {
     position: relative;
     top: 20px;
     right: 50px;
@@ -221,7 +225,8 @@ form input {
     font-size: 18px;
     font-weight: 700;
 }
-.sort-select{
+
+.sort-select {
     background-color: #901C1C;
     font-size: 18px;
     font-weight: 700;
@@ -229,7 +234,7 @@ form input {
     width: 170px;
     padding: 15px;
     border-radius: 5px;
-    box-shadow: 0px 4px 4px 0px #00000040; 
+    box-shadow: 0px 4px 4px 0px #00000040;
     margin: 0;
     display: none;
     position: absolute;
@@ -237,7 +242,7 @@ form input {
     z-index: 1;
 }
 
-.sort-option{
+.sort-option {
     background-color: #901C1C;
     font-size: 18px;
     font-weight: 700;
@@ -247,69 +252,77 @@ form input {
     padding-bottom: 20px;
     cursor: pointer;
 }
-li{    
+
+li {
     list-style: none;
 }
-.sort-option-border{
+
+.sort-option-border {
     border-bottom: 1px solid white;
 }
-.send-button{
-    min-height: 69px;  
+
+.send-button {
+    min-height: 69px;
 }
 
-.lightBox{
+.lightBox {
     display: none;
     height: 100%;
     width: 100%;
-    background-color: rgba(0,0,0,.4);
+    background-color: rgba(0, 0, 0, .4);
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);     
+    transform: translate(-50%, -50%);
 }
-.figure-carrousel{
+
+.figure-carrousel {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 0 25px;
-    
+
 }
-.img-carrousel{
+
+.img-carrousel {
     object-fit: cover;
     width: 1050px;
     height: 800px;
 }
 
-.img-legend-carrousel{
+.img-legend-carrousel {
     color: #901C1C;
     font-size: 24px;
     width: 1050px;
-    
+
 }
 
-.cross{ 
+.cross {
     width: 50px;
     height: 32px;
     display: flex;
     flex-flow: column nowrap;
-    justify-content: space-between;    
-    
+    justify-content: space-between;
+
 }
 
-.cross1, .cross2{
+.cross1,
+.cross2 {
     width: 100%;
     height: 5px;
     transform-origin: 6px;
     background-color: #901C1C;
 }
-.cross1{
-    transform: rotate(45deg);  
-}
-.cross2{
-    transform: rotate(-45deg);  
+
+.cross1 {
+    transform: rotate(45deg);
 }
 
-.nextTo{
+.cross2 {
+    transform: rotate(-45deg);
+}
+
+.nextTo {
     margin-top: 25px;
     display: flex;
     justify-content: center;
@@ -317,7 +330,7 @@ li{
     background-color: white;
 }
 
-.button-carrousel{
+.button-carrousel {
     border: none;
     background-color: white;
 }

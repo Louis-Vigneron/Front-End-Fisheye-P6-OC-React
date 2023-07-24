@@ -127,12 +127,12 @@ function selectSortOption(sortValue, picturesJSON, firstNameJSON) {
     const options = document.querySelectorAll('[role="option"]');
     const button = document.getElementById('sort-button');
     const arrowDown = document.querySelector('.fa-chevron-down');
-    const expanded = listOptions.getAttribute('aria-expanded') === 'true'; 
+    const expanded = listOptions.getAttribute('aria-expanded') === 'true';
     listOptions.setAttribute('aria-expanded', !expanded);
     options.forEach(el => {
         let isSelected = el.id === sortValue;
         el.setAttribute('aria-selected', isSelected);
-        
+
     });
 
 
@@ -147,7 +147,7 @@ function selectSortOption(sortValue, picturesJSON, firstNameJSON) {
     const decodedFirstNameJSON = decodeURIComponent(firstNameJSON);
     const firstName = JSON.parse(decodedFirstNameJSON);
     sort(selectedOption, pictures, firstName)
-    
+
 }
 
 //function to display pictures and videos of the photographer
