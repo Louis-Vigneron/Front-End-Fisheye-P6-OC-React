@@ -84,21 +84,21 @@ function displayPhotographerPage(value) {
       <h2>Contactez-moi <br> ${photographer.name}</h2>
       <img class="modal-close" src="assets/icons/close.svg" tabindex="0" onclick="closeModal()" onkeypress="handleKeyPress(event)" />
     </header>
-    <form>
-      <div>
-        <label>Prénom</label>
+    <form method="get" >
+      <div class="modal__form">
+        <label class="modal__label" for="firstName">Prénom</label><p  class="modal__error" id="firstNameErrorMsg"></p>
         <input id="first"  name="first"/>
       </div>
-      <div>
-        <label >Nom</label>
+      <div class="modal__form">
+        <label class="modal__label"  for="lastName">Nom</label><p  class="modal__error" id="lastNameErrorMsg"></p>
         <input id="last"  name="last"/>
       </div>
-      <div>
-        <label>Email</label>
+      <div class="modal__form">
+        <label class="modal__label"  for="email">Email</label><p  class="modal__error" id="emailErrorMsg"></p>
         <input id="email"  name="email" />
       </div>
-      <div>
-        <label>Votre message</label>
+      <div class="modal__form">
+        <label class="modal__label"  for="message">Votre message</label><p id="messageErrorMsg" class="modal__error"></p>
         <input id="message"  name="message" class="message-modal" />
       </div>
       <button class="contact_button send-button" type="button" onclick="sendModal()">Envoyer</button>
