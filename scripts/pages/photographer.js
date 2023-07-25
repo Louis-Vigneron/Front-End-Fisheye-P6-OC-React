@@ -73,7 +73,7 @@ function displayPhotographerPage(value) {
     <div class="images-photographer"></div>
     <div class="lightBox"></div>
     <div class="total-likes">   
-        <p><span class="likes-total-number">${totalLikes(pictures)}</span><i class="fa-solid fa-heart"></i> </p>
+        <p><span class="likes-total-number">${totalLikes(pictures)}</span><i class="fa-solid fa-heart heart-likes"></i> </p>
         <p>${photographer.price}€ / jour</p>
     </div>     
     

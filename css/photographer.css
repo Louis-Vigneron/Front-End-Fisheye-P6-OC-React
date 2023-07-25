@@ -55,6 +55,17 @@
     border-radius: 5px;
     cursor: pointer;
 }
+.contact_button:hover, 
+.contact_button:focus, 
+.sort-button:hover, 
+.sort-button:focus,
+.sort-option:hover, 
+.sort-option:focus
+{
+    background-color: #DB8876;
+    color: black;
+    border-radius: 5px;
+}
 
 .modal {
     border-radius: 5px;
@@ -164,7 +175,12 @@ form input {
 .fa-solid {
     margin: 0 10px;
 }
-
+.fa-heart:hover, 
+.fa-heart:focus
+{
+    cursor: pointer;
+    color: #DB8876;
+}
 .total-likes {
     position: sticky;
     display: flex;
@@ -177,7 +193,10 @@ form input {
     bottom: 0;
     left: 75%;
 }
-
+.heart-likes:hover{
+    color: black;  
+    cursor:initial;
+}
 .sort {
     display: flex;
     margin-top: 50px;
@@ -205,6 +224,7 @@ form input {
     padding-right: 15px;
     width: 200px;
     text-align: start;
+    cursor: pointer;
 }
 
 .fa-chevron-up {
@@ -251,6 +271,8 @@ form input {
     padding: 10px;
     padding-bottom: 20px;
     cursor: pointer;
+    width: 100%;
+    text-align: start;
 }
 
 li {
@@ -304,7 +326,7 @@ li {
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
-
+    cursor: pointer;
 }
 
 .cross1,
@@ -334,4 +356,5 @@ li {
 .button-carrousel {
     border: none;
     background-color: white;
+    cursor: pointer;
 }
