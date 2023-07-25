@@ -1,5 +1,5 @@
-class Picture{
-    constructor(data, firstName){
+class Picture {
+    constructor(data, firstName) {
         const { id, photographerId, title, image, likes, price, date } = data;
         this.Title = title
         this.Id = id
@@ -12,27 +12,27 @@ class Picture{
     }
 }
 class PictureCard {
-    constructor(picture){
-        this.picture = picture  
+    constructor(picture) {
+        this.picture = picture
     }
 
-    createPictureCard(){      
+    createPictureCard() {
         const pictureCard = `
         <figure >
             <img tabindex="0" class="img-photographer" src="assets/${this.picture.FirstName}/${this.picture.Image}" alt=${this.picture.Title}>
             <figcaption class="img-legend">${this.picture.Title}<span class="likes-number"> ${this.picture.Likes}<i aria-label="Bouton j'aime" tabindex="0" class="fa-solid fa-heart"></i></span></figcaption>
         </figure>
     `
-    return pictureCard
-    }    
+        return pictureCard
+    }
 }
 
-class Video{
-    constructor(data, firstName){
-        const { id, photographerId, title, likes, price, date, video} = data;
+class Video {
+    constructor(data, firstName) {
+        const { id, photographerId, title, likes, price, date, video } = data;
         this.Title = title
         this.Id = id
-        this.PhotographerId = photographerId       
+        this.PhotographerId = photographerId
         this.Likes = likes
         this.Price = price
         this.Date = date
@@ -43,11 +43,11 @@ class Video{
 
 
 class VideoCard {
-    constructor(video){
-        this.data = video  
+    constructor(video) {
+        this.data = video
     }
 
-    createVideoCard(){      
+    createVideoCard() {
         const videoCard = `
         <figure>
              <video tabindex="0" class="img-photographer" controls width="350" height="300">
@@ -56,6 +56,6 @@ class VideoCard {
              <figcaption class="img-legend">${this.data.Title}<span class="likes-number"> ${this.data.Likes}<i aria-label="Bouton j'aime" tabindex="0" class="fa-solid fa-heart"></i></span></figcaption>
          </figure>
     `
-    return videoCard
-    }    
+        return videoCard
+    }
 }

@@ -15,8 +15,8 @@ class PhotographerCard {
     constructor(photographer) {
         this.photographer = photographer
     }
-   
-    createPhotographerCard() {       
+
+    createPhotographerCard() {
         const photographerCard = `
             <a href="./photographer.html?${this.photographer.Id}">
                 <article>
