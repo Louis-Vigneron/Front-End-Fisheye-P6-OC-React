@@ -189,12 +189,11 @@ function selectSortOption(pictures, firstName) {
             listOptions.setAttribute('aria-expanded', "true");
             el.setAttribute('aria-selected', "true");
             let selectedOption = listOptions.querySelector('[aria-selected="true"]').id;
-            console.log(selectedOption)
             menuButton.textContent = selectedOption;
             listOptions.style.display = expanded ? 'none' : 'block';
             button.style.display = "block";
             arrowDown.style.display = "block";
-            sort(selectedOption, pictures, firstName)
+            sort(selectedOption, pictures, firstName);
         })
     });
 }
