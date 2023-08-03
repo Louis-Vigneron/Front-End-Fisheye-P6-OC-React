@@ -66,11 +66,11 @@ function displayPhotographerPage(value) {
     
     <div class="sort">
         <h2 class="sort-title">Trier par</h2>
-        <button class="sort-button" id="sort-button" aria-haspopup="listbox" role="button" aria-expanded="false" onclick="displaySortOptions()">Popularité </button><i class="fa-solid fa-chevron-down"></i>
-        <ul class="sort-select" id="sort-select">
-            <li id="Popularité" class="sort-option-border" onclick="selectSortOption('Popularité','${encodeURIComponent(JSON.stringify(pictures))}','${encodeURIComponent(JSON.stringify(firstName))}')" role="option" aria-selected="false" aria-labelledby="sort-button"><button class="sort-option">Popularité</button> </li>
-            <li id="Date" class="sort-option-border" onclick="selectSortOption('Date','${encodeURIComponent(JSON.stringify(pictures))}', '${encodeURIComponent(JSON.stringify(firstName))}')" role="option" aria-selected="false"><button class="sort-option">Date</button></li>
-            <li id="Titre" onclick="selectSortOption('Titre','${encodeURIComponent(JSON.stringify(pictures))}', '${encodeURIComponent(JSON.stringify(firstName))}')" role="option" aria-selected="false"><button class="sort-option">Titre</button></li>
+        <button class="sort-button" id="sort-button" aria-haspopup="listbox" role="button" >Popularité </button><i class="fa-solid fa-chevron-down"></i>
+        <ul class="sort-select" id="sort-select" aria-expanded="false">
+            <li id="Popularité" class="sort-option-border" role="listbox" aria-selected="false" aria-labelledby="sort-button"><button class="sort-option">Popularité</button> </li>
+            <li id="Date" class="sort-option-border" role="listbox" aria-selected="false" aria-labelledby="sort-button"><button class="sort-option">Date</button></li>
+            <li id="Titre" role="listbox" aria-selected="false" aria-labelledby="sort-button"><button class="sort-option">Titre</button></li>
         </ul>
         <i class="fa-solid fa-chevron-up"></i>
     </div>
@@ -82,6 +82,7 @@ function displayPhotographerPage(value) {
     </div>     
     
         `;
+
     contactForm.innerHTML = `
     <div class="modal">
     <header>
@@ -110,13 +111,15 @@ function displayPhotographerPage(value) {
     
   </div>`
     addPicture(pictures, firstName);
-} 
+    displaySortOptions();
+    selectSortOption(pictures, firstName)
+}
 
 //function to display pictures and videos of the photographer
 function addPicture(pictures, firstName) {
     let images = document.querySelector('.images-photographer');
     images.innerHTML = "";
-    pictures.forEach(element => {        
+    pictures.forEach(element => {
         let newData = new PictureFactory(element, firstName)
         let newCard = new Card(newData)
         let newCardHtml = newCard.createCard()
@@ -152,47 +155,52 @@ function addLike(pictures) {
     }
 }
 
+
+
 // function to display sort option 
 function displaySortOptions() {
+    let sortButton = document.getElementById("sort-button")
     const listOptions = document.getElementById('sort-select');
     const button = document.getElementById('sort-button');
     const arrowDown = document.querySelector('.fa-chevron-down');
     const expanded = listOptions.getAttribute('aria-expanded') === 'true';
-    listOptions.setAttribute('aria-expanded', !expanded);
-    listOptions.style.display = expanded ? 'none' : 'block';
-    button.style.display = "none";
-    arrowDown.style.display = "none";
+    sortButton.addEventListener("click", () => {
+        listOptions.setAttribute('aria-expanded', !expanded);
+        listOptions.style.display = expanded ? 'none' : 'block';
+        button.style.display = "none";
+        arrowDown.style.display = "none";
+    })
+
+
 }
 
-//function to select sort option 
-function selectSortOption(sortValue, picturesJSON, firstNameJSON) {
+function selectSortOption(pictures, firstName) {
     const listOptions = document.getElementById('sort-select');
-    const options = document.querySelectorAll('[role="option"]');
+    const options = document.querySelectorAll('[role="listbox"]');
     const button = document.getElementById('sort-button');
     const arrowDown = document.querySelector('.fa-chevron-down');
-    const expanded = listOptions.getAttribute('aria-expanded') === 'true';
-    listOptions.setAttribute('aria-expanded', !expanded);
-    options.forEach(el => {
-        let isSelected = el.id === sortValue;
-        el.setAttribute('aria-selected', isSelected);
-
-    });
-
+    const expanded = listOptions.getAttribute('aria-expanded') === 'false';
     const menuButton = document.getElementById('sort-button');
-    let selectedOption = listOptions.querySelector('[aria-selected="true"]').textContent;
-    menuButton.textContent = selectedOption;
-    listOptions.style.display = expanded ? 'none' : 'block';
-    button.style.display = "block";
-    arrowDown.style.display = "block";
-    const decodedPicturesJSON = decodeURIComponent(picturesJSON);
-    const pictures = JSON.parse(decodedPicturesJSON);
-    const decodedFirstNameJSON = decodeURIComponent(firstNameJSON);
-    const firstName = JSON.parse(decodedFirstNameJSON);
-    sort(selectedOption, pictures, firstName)
+    options.forEach(el => {
+        el.addEventListener("click", () => {
+            options.forEach(els => {
+                els.setAttribute('aria-selected', "false");
+            })
+            listOptions.setAttribute('aria-expanded', "true");
+            el.setAttribute('aria-selected', "true");
+            let selectedOption = listOptions.querySelector('[aria-selected="true"]').id;
+            console.log(selectedOption)
+            menuButton.textContent = selectedOption;
+            listOptions.style.display = expanded ? 'none' : 'block';
+            button.style.display = "block";
+            arrowDown.style.display = "block";
+            sort(selectedOption, pictures, firstName)
+        })
+    });
 }
 
 //function according to the chosen option 
- function sort(options, pictures, firstName) {
+function sort(options, pictures, firstName) {
 
     if (options == "Popularité") {
         pictures.sort(byLikes);
