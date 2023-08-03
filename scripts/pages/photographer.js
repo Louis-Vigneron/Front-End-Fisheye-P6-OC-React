@@ -3,7 +3,7 @@ const search_id = window.location.search;
 const Id = search_id.slice(1);
 
 
-fetch("../../data/photographers.json")
+fetch("data/photographers.json")
 
     .then(function (res) {
         if (res.ok) {
