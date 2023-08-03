@@ -110,54 +110,7 @@ function displayPhotographerPage(value) {
     
   </div>`
     addPicture(pictures, firstName);
-
-} {/* <ul class="sort-select" id="sort-select">
-<li id="Popularité" class="sort-option-border" onclick="${selectSortOption('Popularité',encodeURIComponent(JSON.stringify(pictures)),encodeURIComponent(JSON.stringify(firstName)))}"><button class="sort-option">Popularité</button> </li>
-<li id="Date" class="sort-option-border" onclick="${selectSortOption('Date',encodeURIComponent(JSON.stringify(pictures)),encodeURIComponent(JSON.stringify(firstName)))}" role="option" aria-selected="false"><button class="sort-option">Date</button></li>
-<li id="Titre" onclick="${selectSortOption('Titre',encodeURIComponent(JSON.stringify(pictures)),encodeURIComponent(JSON.stringify(firstName)))}" role="option" aria-selected="false"><button class="sort-option">Titre</button></li>
-</ul>
- */}
-
-// function to display sort option 
-function displaySortOptions() {
-    const listOptions = document.getElementById('sort-select');
-    const button = document.getElementById('sort-button');
-    const arrowDown = document.querySelector('.fa-chevron-down');
-    const expanded = listOptions.getAttribute('aria-expanded') === 'true';
-    listOptions.setAttribute('aria-expanded', !expanded);
-    listOptions.style.display = expanded ? 'none' : 'block';
-    button.style.display = "none";
-    arrowDown.style.display = "none";
-}
-
-//function to select sort option 
-function selectSortOption(sortValue, picturesJSON, firstNameJSON) {
-    const listOptions = document.getElementById('sort-select');
-    const options = document.querySelectorAll('[role="option"]');
-    const button = document.getElementById('sort-button');
-    const arrowDown = document.querySelector('.fa-chevron-down');
-    const expanded = listOptions.getAttribute('aria-expanded') === 'true';
-    listOptions.setAttribute('aria-expanded', !expanded);
-    options.forEach(el => {
-        let isSelected = el.id === sortValue;
-        el.setAttribute('aria-selected', isSelected);
-
-    });
-
-
-    const menuButton = document.getElementById('sort-button');
-    let selectedOption = listOptions.querySelector('[aria-selected="true"]').textContent;
-    menuButton.textContent = selectedOption;
-    listOptions.style.display = expanded ? 'none' : 'block';
-    button.style.display = "block";
-    arrowDown.style.display = "block";
-    const decodedPicturesJSON = decodeURIComponent(picturesJSON);
-    const pictures = JSON.parse(decodedPicturesJSON);
-    const decodedFirstNameJSON = decodeURIComponent(firstNameJSON);
-    const firstName = JSON.parse(decodedFirstNameJSON);
-    sort(selectedOption, pictures, firstName)
-
-}
+} 
 
 //function to display pictures and videos of the photographer
 function addPicture(pictures, firstName) {
@@ -199,8 +152,47 @@ function addLike(pictures) {
     }
 }
 
+// function to display sort option 
+function displaySortOptions() {
+    const listOptions = document.getElementById('sort-select');
+    const button = document.getElementById('sort-button');
+    const arrowDown = document.querySelector('.fa-chevron-down');
+    const expanded = listOptions.getAttribute('aria-expanded') === 'true';
+    listOptions.setAttribute('aria-expanded', !expanded);
+    listOptions.style.display = expanded ? 'none' : 'block';
+    button.style.display = "none";
+    arrowDown.style.display = "none";
+}
+
+//function to select sort option 
+function selectSortOption(sortValue, picturesJSON, firstNameJSON) {
+    const listOptions = document.getElementById('sort-select');
+    const options = document.querySelectorAll('[role="option"]');
+    const button = document.getElementById('sort-button');
+    const arrowDown = document.querySelector('.fa-chevron-down');
+    const expanded = listOptions.getAttribute('aria-expanded') === 'true';
+    listOptions.setAttribute('aria-expanded', !expanded);
+    options.forEach(el => {
+        let isSelected = el.id === sortValue;
+        el.setAttribute('aria-selected', isSelected);
+
+    });
+
+    const menuButton = document.getElementById('sort-button');
+    let selectedOption = listOptions.querySelector('[aria-selected="true"]').textContent;
+    menuButton.textContent = selectedOption;
+    listOptions.style.display = expanded ? 'none' : 'block';
+    button.style.display = "block";
+    arrowDown.style.display = "block";
+    const decodedPicturesJSON = decodeURIComponent(picturesJSON);
+    const pictures = JSON.parse(decodedPicturesJSON);
+    const decodedFirstNameJSON = decodeURIComponent(firstNameJSON);
+    const firstName = JSON.parse(decodedFirstNameJSON);
+    sort(selectedOption, pictures, firstName)
+}
+
 //function according to the chosen option 
-function sort(options, pictures, firstName) {
+ function sort(options, pictures, firstName) {
 
     if (options == "Popularité") {
         pictures.sort(byLikes);

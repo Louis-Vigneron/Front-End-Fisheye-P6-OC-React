@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 function displayModal() {
   const modal = document.getElementById("contact_modal");
   modal.style.display = "block";
@@ -11,6 +12,7 @@ function closeModal() {
 }
 
 // function to manage the enter key on the keyboard
+// eslint-disable-next-line no-unused-vars
 function handleKeyPress(event) {
   if (event.key === "Enter") {
     closeModal();
@@ -38,6 +40,7 @@ function hideError(message) {
   message.textContent = "";
 }
 // function for check user input in modal
+// eslint-disable-next-line no-unused-vars
 function sendModal() {
 
   const modal = document.getElementById("contact_modal");
@@ -45,7 +48,7 @@ function sendModal() {
   // regex test
   let regexFirstName = /^([A-Za-z]{2,20})?([-]{0,1})?([A-Za-z]{2,20})$/;
   let regexLastName = /^[A-Za-z]{3,20}$/;
-  let regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+  let regexEmail = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
   let regexMessage = /^[a-zA-Z0-9\s.,?!'"()@#$%&*-]+$/;
 
   const firstNameErrorMsg = document.getElementById("firstNameErrorMsg");
