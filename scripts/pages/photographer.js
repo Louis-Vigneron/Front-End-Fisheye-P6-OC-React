@@ -17,6 +17,10 @@ fetch("../../data/photographers.json")
         console.log(err);
     });
 
+
+import { PictureFactory } from "../factories/PicturesFactory.js";
+import { Card } from "../templates/createCard.js";
+
 // function to display all the elements of the photographer page
 function displayPhotographerPage(value) {
 
@@ -107,7 +111,12 @@ function displayPhotographerPage(value) {
   </div>`
     addPicture(pictures, firstName);
 
-}
+} {/* <ul class="sort-select" id="sort-select">
+<li id="Popularité" class="sort-option-border" onclick="${selectSortOption('Popularité',encodeURIComponent(JSON.stringify(pictures)),encodeURIComponent(JSON.stringify(firstName)))}"><button class="sort-option">Popularité</button> </li>
+<li id="Date" class="sort-option-border" onclick="${selectSortOption('Date',encodeURIComponent(JSON.stringify(pictures)),encodeURIComponent(JSON.stringify(firstName)))}" role="option" aria-selected="false"><button class="sort-option">Date</button></li>
+<li id="Titre" onclick="${selectSortOption('Titre',encodeURIComponent(JSON.stringify(pictures)),encodeURIComponent(JSON.stringify(firstName)))}" role="option" aria-selected="false"><button class="sort-option">Titre</button></li>
+</ul>
+ */}
 
 // function to display sort option 
 function displaySortOptions() {
@@ -154,19 +163,11 @@ function selectSortOption(sortValue, picturesJSON, firstNameJSON) {
 function addPicture(pictures, firstName) {
     let images = document.querySelector('.images-photographer');
     images.innerHTML = "";
-    pictures.forEach(element => {
-        if (element.image) {
-            let picture = new Picture(element, firstName);
-            let pictureCard = new PictureCard(picture);
-            let pictureCardHtml = pictureCard.createPictureCard();
-            images.innerHTML += pictureCardHtml;
-        }
-        else {
-            let video = new Video(element, firstName);
-            let videoCard = new VideoCard(video);
-            let videoCardHtml = videoCard.createVideoCard();
-            images.innerHTML += videoCardHtml;
-        }
+    pictures.forEach(element => {        
+        let newData = new PictureFactory(element, firstName)
+        let newCard = new Card(newData)
+        let newCardHtml = newCard.createCard()
+        images.innerHTML += newCardHtml
     });
     addLike(pictures);
     displayLightBox(pictures, firstName);
@@ -195,7 +196,7 @@ function addLike(pictures) {
             }
         })
 
-    };
+    }
 }
 
 //function according to the chosen option 
@@ -410,7 +411,3 @@ function nextPicture(pictures, index, firstName) {
         displayVideoCarrousel(pictures, index, firstName)
     }
 }
-
-
-
-

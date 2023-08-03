@@ -11,7 +11,9 @@ fetch("../../data/photographers.json")
   .catch(function (err) {
     console.log(err);
   });
-
+  
+import {Photographer} from "../templates/photographer.js";
+import {PhotographerCard} from "../templates/photographerCard.js";
 
 function displayData(photographers) {
   const photographersSection = document.querySelector(".photographer_section");

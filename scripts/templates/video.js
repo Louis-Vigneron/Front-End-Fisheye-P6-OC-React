@@ -1,13 +1,13 @@
-export class Picture {
+export class Video {
     constructor(data, firstName) {
-        const { id, photographerId, title, image, likes, price, date } = data;
+        const { id, photographerId, title, likes, price, date, video } = data;
         this.Title = title
         this.Id = id
         this.PhotographerId = photographerId
-        this.Image = image
         this.Likes = likes
         this.Price = price
         this.Date = date
+        this.Video = video
         this.FirstName = firstName
     }
 }
