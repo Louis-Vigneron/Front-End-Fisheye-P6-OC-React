@@ -1,4 +1,4 @@
-fetch("data/photographers.json")
+fetch("./data/photographers.json")
 
   .then(function (res) {
     if (res.ok) {
