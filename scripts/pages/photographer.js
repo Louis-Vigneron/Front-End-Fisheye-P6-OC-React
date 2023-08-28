@@ -66,13 +66,14 @@ function displayPhotographerPage(value) {
     
     <div class="sort">
         <h2 class="sort-title">Trier par</h2>
-        <button class="sort-button" id="sort-button" aria-haspopup="listbox" role="button" >Popularité </button><i class="fa-solid fa-chevron-down"></i>
+        <div id="sort-button">        
+            <button class="sort-button" aria-haspopup="listbox" role="button" >Popularité <i class="fa-solid fa-chevron-down"></i></button>
+        </div>
         <ul class="sort-select" id="sort-select" aria-expanded="false">
-            <li id="Popularité" class="sort-option-border" role="listbox" aria-selected="false" aria-labelledby="sort-button"><button class="sort-option">Popularité</button> </li>
+            <li id="Popularité" class="sort-option-border" role="listbox" aria-selected="false" aria-labelledby="sort-button"><button class="sort-option">Popularité <i class="fa-solid fa-chevron-up"></i></button> </li>
             <li id="Date" class="sort-option-border" role="listbox" aria-selected="false" aria-labelledby="sort-button"><button class="sort-option">Date</button></li>
             <li id="Titre" role="listbox" aria-selected="false" aria-labelledby="sort-button"><button class="sort-option">Titre</button></li>
         </ul>
-        <i class="fa-solid fa-chevron-up"></i>
     </div>
     <div class="images-photographer"></div>
     <div class="lightBox"></div>
@@ -156,31 +157,24 @@ function addLike(pictures) {
 }
 
 
-
 // function to display sort option 
 function displaySortOptions() {
     let sortButton = document.getElementById("sort-button")
     const listOptions = document.getElementById('sort-select');
-    const button = document.getElementById('sort-button');
-    const arrowDown = document.querySelector('.fa-chevron-down');
     const expanded = listOptions.getAttribute('aria-expanded') === 'true';
     sortButton.addEventListener("click", () => {
         listOptions.setAttribute('aria-expanded', !expanded);
         listOptions.style.display = expanded ? 'none' : 'block';
-        button.style.display = "none";
-        arrowDown.style.display = "none";
+        sortButton.style.display = "none";
     })
-
-
 }
 
+// function to select sort option 
 function selectSortOption(pictures, firstName) {
     const listOptions = document.getElementById('sort-select');
     const options = document.querySelectorAll('[role="listbox"]');
     const button = document.getElementById('sort-button');
-    const arrowDown = document.querySelector('.fa-chevron-down');
     const expanded = listOptions.getAttribute('aria-expanded') === 'false';
-    const menuButton = document.getElementById('sort-button');
     options.forEach(el => {
         el.addEventListener("click", () => {
             options.forEach(els => {
@@ -189,10 +183,9 @@ function selectSortOption(pictures, firstName) {
             listOptions.setAttribute('aria-expanded', "true");
             el.setAttribute('aria-selected', "true");
             let selectedOption = listOptions.querySelector('[aria-selected="true"]').id;
-            menuButton.textContent = selectedOption;
+            button.innerHTML = `<button class="sort-button" id="sort-button" aria-haspopup="listbox" role="button" >${selectedOption}<i class="fa-solid fa-chevron-down"></i></button>`;
             listOptions.style.display = expanded ? 'none' : 'block';
             button.style.display = "block";
-            arrowDown.style.display = "block";
             sort(selectedOption, pictures, firstName);
         })
     });
